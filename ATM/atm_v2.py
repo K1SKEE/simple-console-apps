@@ -1,15 +1,4 @@
-"""банкомат
-
-депозит
-снимать
-баланс
-пин-код
-залогиниться
-
-админка
-количество доступной налички в банкомате
-админ может пополнять банкомат наличкой
-реализовать авторизованного пользователя в отдельном классе"""
+"""Приложение банкомат"""
 import json
 import random
 import sys
@@ -194,11 +183,6 @@ class Data:
     def __init__(self):
         with open(self.JSON_DATA) as base:
             self._data_base = json.load(base)
-        # try:
-        #     with open(self.JSON_DATA) as base:
-        #         self._data_base = json.load(base)
-        # except FileNotFoundError:
-        #     pass
 
     def new_user(self, card, last_name, first_name):
         self._data_base[card] = {'pin': '0000',
