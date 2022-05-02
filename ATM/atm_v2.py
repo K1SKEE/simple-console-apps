@@ -13,7 +13,8 @@ class ATM:
         self.menu_action = {
             '1': lambda: self.open_account(),
             '2': lambda: self.login(),
-            '3': lambda: self.login_admin()
+            '3': lambda: self.login_admin(),
+            '4': lambda: sys.exit(),
         }
 
     def menu(self):
@@ -23,14 +24,14 @@ class ATM:
         while True:
             print('1 - Открыть счет\n'
                   '2 - Вставить карту\n'
-                  '3 - Войти как админ\n')
+                  '3 - Войти как админ\n'
+                  '4 - Завершить работу\n')
             operation = input()
             self.menu_action[operation]()
 
     def open_account(self):
         """Create account"""
-        random_card = [str(random.randint(0, 9)) for num in range(12)]
-        open_card = '4149' + ''.join(random_card)
+        open_card = self._data.create_card()
         last_name = input('Введите свою Фамилию:\n')
         first_name = input('Введите своё Имя:\n')
         self._data.new_user(open_card, last_name, first_name)
@@ -190,6 +191,18 @@ class Data:
                                  'last_name': last_name,
                                  'first_name': first_name}
         self.update_data()
+
+    def create_card(self):
+        all_cards = list(self._data_base.keys())
+        random_card = [str(random.randint(0, 9)) for _ in range(12)]
+        open_card = '4149' + ''.join(random_card)
+        if open_card in all_cards:
+            return self.create_card()
+        return open_card
+
+    @staticmethod
+    def _create_iban():
+        return
 
     def update_data(self):
         with open(self.JSON_DATA, 'w') as base:
